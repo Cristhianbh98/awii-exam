@@ -22,4 +22,14 @@ app.get('/', (req, res ) => {
 
 app.use('/api/transaccion', require('./routes/transaccion.routes'));
 
+app.use((req, res) => {
+        res.status(404).send(
+                {
+                        status:404,
+                        message:"404 not found",
+                        url_principal: "/api/transaccion"
+                }
+        );
+});
+
 app.listen(PORT, () => console.log(`Server running at http://127.0.0.1:${PORT}`))
