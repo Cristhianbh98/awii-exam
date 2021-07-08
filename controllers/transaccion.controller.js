@@ -2,7 +2,12 @@ const Transaccion = require('../models/Transaccion');
 require('../mongodb');
 
 exports.obtenerTodasLasTransacciones = (req, res) => {
-    res.status(200).send({msg: 'hello'});
+
+    Transaccion.find({}).then( transacciones =>{
+        const transacciones_errores = transacciones.filter( transaccion => transaccion.tipoerror )
+        res.status(200).send(transacciones_errores);
+    } )
+    
 }
 
 exports.insertarTransaccion = (req, res) => {
@@ -32,6 +37,6 @@ exports.insertarTransaccion = (req, res) => {
         tipoerror
     });
 
-    new_transsacion.save().then( new_transsacion => res.status(200).send(new_transsacion));
+    new_transsacion.save().then( new_transsacion => res.status(201).send(new_transsacion));
     
 }
